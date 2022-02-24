@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/EliasPeeters/simpleChatApp/issues"
   },
-  "homepage": "https://github.com/EliasPeeters/simpleChatApp#readme"
+  "homepage": "https://github.com/EliasPeeters/simpleChatApp#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "http": "*",
+    "socket.io": "^4.4.1"
+  }
 }
