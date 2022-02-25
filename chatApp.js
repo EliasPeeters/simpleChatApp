@@ -3,23 +3,31 @@ const http = require('http');
 const { Server } = require("socket.io");
 let credentialsLoader = require('./getCredentials');
 let mysqlSetup = require('./mysqlSetup');
+const bodyparser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 app = express()
 app.set('view engine', 'ejs');
 credentials = credentialsLoader.getCredentials();
 connection = mysqlSetup.getConnection();
 
+urlencodedparser = bodyparser.urlencoded({extended: false});
+app.use(express.urlencoded());
+app.use(cookieParser())
 
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.get('/', async (req, res) => {
-    // res.sendFile(__dirname + '/index.html');
-    let messages = await connection.asyncquery('SELECT * FROM chat');
-    console.log(messages)
+loggedInUsers = []
 
-    res.render('main', {messages})
-});
+
+// routes
+
+const mainRoute = require('./routes/main');
+const loginRoute = require('./routes/login');
+const registerRoute = require('./routes/register');
+
+
 
 io.on('connection', (socket) => {
     console.log('a user connected');
